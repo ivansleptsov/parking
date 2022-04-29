@@ -6,85 +6,97 @@ const User = sequelize.define('user', {
   email: { type: DataTypes.STRING, unique: true },
   password: { type: DataTypes.STRING },
   role: { type: DataTypes.STRING, defaultValue: 'USER' },
+  phone: { type: DataType.STRING, unique: true, allowNull: false },
+  firstName: { type: DataType.STRING, allowNull: false },
+  lastName: { type: DataType.STRING, allowNull: false },
 })
 
-const Basket = sequelize.define('basket', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+const Place = sequelize.define('place', {
+  id: { type: DataType.INTEGER, unique: true, autoIncrement: true }, // ID парковочного места
+  parkId: { type: DataType.INTEGER, allowNull: false, primaryKey: true }, // ID паркинга
+  number: { type: DataType.INTEGER, allowNull: false, primaryKey: true }, // номер парковочного места
+  userId: { type: DataType.INTEGER, allowNull: false }, // ID владельца
+  description: { type: DataType.STRING, allowNull: true }, // описанием места
+  price: { type: DataTypes.INTEGER, allowNull: false }, // цена за ночь
+  activeStatus: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  }, // статус активации аренды
 })
 
-const BasketDevice = sequelize.define('basket_device', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+const Park = sequelize.define('park', {
+  id: {
+    type: DataType.INTEGER,
+    unique: true,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  address: { type: DataType.STRING, unique: true, allowNull: false },
 })
 
-const Device = sequelize.define('device', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: DataTypes.STRING, unique: true, allowNull: false },
-  price: { type: DataTypes.INTEGER, allowNull: false },
-  rating: { type: DataTypes.INTEGER, defaultValue: 0 },
-  img: { type: DataTypes.STRING, allowNull: false },
-  brandName: { type: DataTypes.STRING, unique: true, allowNull: false },
+const Booking = sequelize.define('booking', {
+  id: {
+    type: DataType.INTEGER,
+    unique: true,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  renterUserId: { type: DataType.INTEGER, allowNull: false },
+  holderUserId: { type: DataType.INTEGER, allowNull: false },
+  placeId: { type: DataType.INTEGER, allowNull: false },
+  dateStart: { type: DataType.DATE, allowNull: false },
+  dateEnd: { type: DataType.DATE, allowNull: false },
+  price: { type: DataType.INTEGER, allowNull: false },
 })
+const Undate = sequelize
+  .define('undate', {
+    id: {
+      type: DataType.INTEGER,
+      unique: true,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    placeId: { type: DataType.INTEGER, allowNull: false },
+    dateStart: { type: DataType.DATE, allowNull: false },
+    dateEnd: { type: DataType.DATE, allowNull: false },
+  })
 
-const Type = sequelize.define('type', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: DataTypes.STRING, unique: true, allowNull: false },
-})
+  .hasMany(Place)
+Place.belongsTo().hasMany(Booking)
+Booking.belongsTo(User)
 
-const Brand = sequelize.define('brand', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: DataTypes.STRING, unique: true, allowNull: false },
-})
+Park.hasMany(Place)
+Place.belongsTo(Park)
 
-const Rating = sequelize.define('rating', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  rate: { type: DataTypes.STRING, allowNull: false },
-})
+Place.hasOne(Park)
+Park.belongsTo(Place)
 
-const DeviceInfo = sequelize.define('device_info', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  title: { type: DataTypes.STRING, allowNull: false },
-  description: { type: DataTypes.STRING, allowNull: false },
-})
+Place.hasMany(Booking)
+Booking.belongsTo(Place)
 
-const TypeBrand = sequelize.define('type_brand', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-})
+Undate.hasMany(Place)
+Place.belongsTo(Undate)
 
-User.hasOne(Basket)
-Basket.belongsTo(User)
-
-User.hasMany(Rating)
-Rating.belongsTo(User)
-
-Basket.hasMany(BasketDevice)
-BasketDevice.belongsTo(Basket)
-
-Type.hasMany(Device)
-Device.belongsTo(Type)
-
-Brand.hasMany(Device)
-Device.belongsTo(Brand)
-
-Device.hasMany(Rating)
-Rating.belongsTo(Device)
-
-Device.hasMany(BasketDevice)
-BasketDevice.belongsTo(Device)
-
-Device.hasMany(DeviceInfo, { as: 'info' })
-DeviceInfo.belongsTo(Device)
-
-Type.belongsToMany(Brand, { through: TypeBrand })
-Brand.belongsToMany(Type, { through: TypeBrand })
+Place.hasMany()
+Undate.belongsTo(Place)
 
 module.exports = {
   User,
-  Basket,
-  BasketDevice,
-  Device,
-  Type,
-  Brand,
-  Rating,
-  TypeBrand,
-  DeviceInfo,
+  Park,
+  Place,
+  Booking,
+  Undate,
 }
+
+// module.exports = {
+//   User,
+//   Basket,
+//   BasketDevice,
+//   Device,
+//   Type,
+//   Brand,
+//   Rating,
+//   TypeBrand,
+//   DeviceInfo,
+// }
