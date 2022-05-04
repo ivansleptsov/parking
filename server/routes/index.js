@@ -11,6 +11,6 @@ router.use('/user', userRouter)
 router.use('/place', placeRouter)
 router.use('/park', parkRouter)
 router.use('/booking', bookingRouter)
-router.use('/undates', undatesRouter)
+router.use('/undates', undateRouter)
 
 module.exports = router

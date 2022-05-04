@@ -6,79 +6,78 @@ const User = sequelize.define('user', {
   email: { type: DataTypes.STRING, unique: true },
   password: { type: DataTypes.STRING },
   role: { type: DataTypes.STRING, defaultValue: 'USER' },
-  phone: { type: DataType.STRING, unique: true, allowNull: false },
-  firstName: { type: DataType.STRING, allowNull: false },
-  lastName: { type: DataType.STRING, allowNull: false },
+  phone: { type: DataTypes.STRING, unique: true, allowNull: false },
+  firstName: { type: DataTypes.STRING, allowNull: false },
+  lastName: { type: DataTypes.STRING, allowNull: false },
 })
 
 const Place = sequelize.define('place', {
-  id: { type: DataType.INTEGER, unique: true, autoIncrement: true }, // ID парковочного места
-  parkId: { type: DataType.INTEGER, allowNull: false, primaryKey: true }, // ID паркинга
-  number: { type: DataType.INTEGER, allowNull: false, primaryKey: true }, // номер парковочного места
-  userId: { type: DataType.INTEGER, allowNull: false }, // ID владельца
-  description: { type: DataType.STRING, allowNull: true }, // описанием места
-  price: { type: DataTypes.INTEGER, allowNull: false }, // цена за ночь
+  id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    autoIncrement: true,
+  }, // ID парковочного места
+  parkId: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true }, // ID паркинга
+  number: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true }, // номер парковочного места
+  userId: { type: DataTypes.INTEGER, allowNull: false }, // ID владельца
+  description: { type: DataTypes.STRING, allowNull: true }, // описанием места
+  price: { type: DataTypes.INTEGER }, // цена за ночь
   activeStatus: {
-    type: DataType.BOOLEAN,
+    type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false,
-  }, // статус активации аренды
+  },
 })
 
 const Park = sequelize.define('park', {
   id: {
-    type: DataType.INTEGER,
+    type: DataTypes.INTEGER,
     unique: true,
     autoIncrement: true,
     primaryKey: true,
   },
-  address: { type: DataType.STRING, unique: true, allowNull: false },
+  address: { type: DataTypes.STRING, unique: true, allowNull: false },
 })
 
 const Booking = sequelize.define('booking', {
   id: {
-    type: DataType.INTEGER,
+    type: DataTypes.INTEGER,
     unique: true,
     autoIncrement: true,
     primaryKey: true,
   },
-  renterUserId: { type: DataType.INTEGER, allowNull: false },
-  holderUserId: { type: DataType.INTEGER, allowNull: false },
-  placeId: { type: DataType.INTEGER, allowNull: false },
-  dateStart: { type: DataType.DATE, allowNull: false },
-  dateEnd: { type: DataType.DATE, allowNull: false },
-  price: { type: DataType.INTEGER, allowNull: false },
+  userId: { type: DataTypes.INTEGER, allowNull: false }, // renter User
+  holderUserId: { type: DataTypes.INTEGER, allowNull: false },
+  // placeId: { type: DataTypes.INTEGER, allowNull: false },
+  dateStart: { type: DataTypes.DATE, allowNull: false },
+  dateEnd: { type: DataTypes.DATE, allowNull: false },
+  price: { type: DataTypes.INTEGER, allowNull: false },
 })
-const Undate = sequelize
-  .define('undate', {
-    id: {
-      type: DataType.INTEGER,
-      unique: true,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    placeId: { type: DataType.INTEGER, allowNull: false },
-    dateStart: { type: DataType.DATE, allowNull: false },
-    dateEnd: { type: DataType.DATE, allowNull: false },
-  })
+const Undate = sequelize.define('undate', {
+  id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  placeId: { type: DataTypes.INTEGER, allowNull: false },
+  dateStart: { type: DataTypes.DATE, allowNull: false },
+  dateEnd: { type: DataTypes.DATE, allowNull: false },
+})
 
-  .hasMany(Place)
-Place.belongsTo().hasMany(Booking)
+User.hasMany(Place)
+Place.belongsTo(User)
+
+User.hasMany(Booking)
 Booking.belongsTo(User)
 
 Park.hasMany(Place)
 Place.belongsTo(Park)
 
-Place.hasOne(Park)
-Park.belongsTo(Place)
-
 Place.hasMany(Booking)
 Booking.belongsTo(Place)
 
-Undate.hasMany(Place)
-Place.belongsTo(Undate)
-
-Place.hasMany()
+Place.hasMany(Undate)
 Undate.belongsTo(Place)
 
 module.exports = {
@@ -88,15 +87,3 @@ module.exports = {
   Booking,
   Undate,
 }
-
-// module.exports = {
-//   User,
-//   Basket,
-//   BasketDevice,
-//   Device,
-//   Type,
-//   Brand,
-//   Rating,
-//   TypeBrand,
-//   DeviceInfo,
-// }

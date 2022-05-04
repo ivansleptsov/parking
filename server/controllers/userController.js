@@ -11,7 +11,7 @@ const generateJwt = (id, email, role) => {
 
 class UserController {
   async registration(req, res, next) {
-    const { email, password, role } = req.body
+    const { email, password, role, phone, firstName, lastName } = req.body
     if (!email || !password) {
       return next(ApiError.badRequest('Некорректный email или password'))
     }
@@ -24,8 +24,14 @@ class UserController {
     }
 
     const hashPassword = await bcrypt.hash(password, 5) // хэшируем пароль
-    const user = await User.create({ email, role, password: hashPassword }) // создаем пользователя
-    const basket = await Basket.create({ userId: user.id }) // создаем корзину для пользователя
+    const user = await User.create({
+      email,
+      role,
+      password: hashPassword,
+      phone,
+      firstName,
+      lastName,
+    }) // создаем пользователя
 
     const token = generateJwt(user.id, user.email, user.role)
     return res.json(token)

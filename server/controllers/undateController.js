@@ -6,7 +6,7 @@ class UndateController {
     try {
       let { placeId, dateStart, dateEnd } = req.body
 
-      const undate = await Device.create({
+      const undate = await Undate.create({
         placeId,
         dateStart,
         dateEnd,
@@ -20,4 +20,4 @@ class UndateController {
 
   async getAll(req, res) {}
 }
-module.exports = new UndatesController()
+module.exports = new UndateController()

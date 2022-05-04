@@ -1,5 +1,5 @@
-const uuid = require('uuid')
-const path = require('path')
+// const uuid = require('uuid')
+// const path = require('path')
 const { Place } = require('../models/models')
 const ApiError = require('../error/ApiError')
 
@@ -28,7 +28,6 @@ class PlaceController {
       //     })
       //   )
       // }
-
       return res.json(place)
     } catch (e) {
       next(ApiError.badRequest(e.message))
@@ -36,46 +35,47 @@ class PlaceController {
   }
 
   async getAll(req, res) {
-    let { brandId, typeId, limit, page } = req.query
+    let { parkId, userId, limit, page } = req.query
     page = page || 1 // кол-во страниц
     limit = limit || 9 // девайсов на странице
     let offset = page * limit - limit // отступ, скрытие первых 9 позиций на след странице
-    let devices
+    let places
 
-    if (!brandId && !typeId) {
-      devices = await Device.findAndCountAll({ limit, offset })
+    if (!parkId && !userId) {
+      places = await Place.findAndCountAll({ limit, offset })
     }
-    if (brandId && !typeId) {
-      devices = await Device.findAndCountAll({
-        where: { brandId },
+    if (parkId && !userId) {
+      places = await Place.findAndCountAll({
+        where: { parkId },
         limit,
         offset,
       })
     }
-    if (!brandId && typeId) {
-      devices = await Device.findAndCountAll({
-        where: { typeId },
+    if (!parkId && userId) {
+      places = await Place.findAndCountAll({
+        where: { userId },
         limit,
         offset,
       })
     }
-    if (brandId && typeId) {
-      devices = await Device.findAndCountAll({
-        where: { typeId, brandId },
+    if (parkId && userId) {
+      places = await Place.findAndCountAll({
+        where: { parkId, userId },
         limit,
         offset,
       })
     }
-    return res.json(devices)
+
+    return res.json(places)
   }
 
   async getOne(req, res) {
     const { id } = req.params
-    const device = await Device.findOne({
+    const place = await Place.findOne({
       where: { id },
-      include: [{ model: DeviceInfo, as: 'info' }],
+      // include: [{ model: DeviceInfo, as: 'info' }],
     })
-    return res.json(device)
+    return res.json(place)
   }
 }
 

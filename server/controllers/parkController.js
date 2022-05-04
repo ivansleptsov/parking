@@ -4,7 +4,7 @@ const { Park } = require('../models/models')
 class ParkController {
   async create(req, res, next) {
     try {
-      let { address } = req.body
+      const { address } = req.body
 
       const park = await Park.create({
         address,
@@ -16,6 +16,9 @@ class ParkController {
     }
   }
 
-  async getAll(req, res) {}
+  async getAll(req, res) {
+    const parks = await Park.findAll()
+    return res.json(parks)
+  }
 }
 module.exports = new ParkController()
