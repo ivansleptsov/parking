@@ -4,7 +4,7 @@ import CreateType from '../components/Modals/CreateType'
 import CreateDevice from '../components/Modals/CreateDevice'
 import CreateBrand from '../components/Modals/CreateBrand'
 
-const Admin = () => {
+const PlaceAdd = () => {
   const [brandVisible, setBrandVisible] = useState(false)
   const [deviceVisible, setDeviseVisible] = useState(false)
   const [typeVisible, setTypeVisible] = useState(false)
@@ -41,4 +41,4 @@ const Admin = () => {
   )
 }
 
-export default Admin
+export default PlaceAdd

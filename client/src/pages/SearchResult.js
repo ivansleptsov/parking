@@ -8,8 +8,8 @@ import TypeBar from '../components/TypeBar'
 import { fetchBrands, fetchDevices, fetchTypes } from '../http/deviceAPI'
 import Pages from '../components/Pages'
 
-const Shop = observer(() => {
-  const { device } = useContext(Context)
+const SearchResult = observer(() => {
+  const { place } = useContext(Context)
 
   useEffect(() => {
     fetchTypes().then((data) => device.setTypes(data))
@@ -49,4 +49,4 @@ const Shop = observer(() => {
   )
 })
 
-export default Shop
+export default SearchResult

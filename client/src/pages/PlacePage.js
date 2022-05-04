@@ -3,7 +3,7 @@ import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap'
 import star2 from '../assets/star2.png'
 import { useParams } from 'react-router-dom'
 import { fetchOneDevice } from '../http/deviceAPI'
-const DevicePage = () => {
+const PlacePage = () => {
   const [device, setDevice] = useState({ info: [] })
   const { id } = useParams()
 
@@ -69,4 +69,4 @@ const DevicePage = () => {
   )
 }
 
-export default DevicePage
+export default PlacePage

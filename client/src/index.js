@@ -2,7 +2,7 @@ import React, { createContext } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import UserStore from './store/UserStore'
-import DeviceStore from './store/DeviceStore'
+import PlaceStore from './store/PlaceStore'
 
 export const Context = createContext(null)
 
@@ -23,7 +23,7 @@ root.render(
   <Context.Provider
     value={{
       user: new UserStore(),
-      device: new DeviceStore(),
+      device: new PlaceStore(),
     }}
   >
     <App />

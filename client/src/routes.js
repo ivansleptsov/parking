@@ -1,37 +1,33 @@
-import Admin from './pages/Admin'
 import Auth from './pages/Auth'
-import Basket from './pages/Basket'
-import DevicePage from './pages/DevicePage'
-import Shop from './pages/Shop'
+import Home from './pages/Home'
+import PlaceAdd from './pages/PlaceAdd'
+import PlacePage from './pages/PlacePage'
+import SearchResult from './pages/SearchResult'
 import {
-  ADMIN_ROUTE,
-  BASKET_ROUTE,
-  DEVICE_ROUTE,
+  ADD_ROUTE,
+  HOME_ROUTE,
+  PLACE_ROUTE,
   LOGIN_ROUTE,
   REGISTRATION_ROUTE,
-  SHOP_ROUTE,
+  SEARCH_ROUTE,
 } from './utils/consts'
 
 export const authRoutes = [
   {
-    path: ADMIN_ROUTE,
-    Component: Admin,
+    path: ADD_ROUTE,
+    Component: PlaceAdd,
   },
   {
-    path: BASKET_ROUTE,
-    Component: Basket,
+    path: SEARCH_ROUTE,
+    Component: SearchResult,
+  },
+  {
+    path: PLACE_ROUTE + '/:id',
+    Component: PlacePage,
   },
 ]
 
 export const publicRoutes = [
-  {
-    path: SHOP_ROUTE,
-    Component: Shop,
-  },
-  {
-    path: DEVICE_ROUTE + '/:id',
-    Component: DevicePage,
-  },
   {
     path: LOGIN_ROUTE,
     Component: Auth,
@@ -39,5 +35,9 @@ export const publicRoutes = [
   {
     path: REGISTRATION_ROUTE,
     Component: Auth,
+  },
+  {
+    path: HOME_ROUTE,
+    Component: Home,
   },
 ]
