@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
-import { createBrand } from '../../http/deviceAPI'
+import { createPark } from '../../http/placeAPI'
 
-const CreateBrand = ({ show, onHide }) => {
+const CreatePark = ({ show, onHide }) => {
   const [value, setValue] = useState('')
-  const addBrand = () => {
-    createBrand({ name: value }).then((data) => {
+  const addPark = () => {
+    createPark({ name: value }).then((data) => {
       setValue('')
       onHide()
     })
@@ -14,7 +14,7 @@ const CreateBrand = ({ show, onHide }) => {
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Добавить новый бренд
+          Добавить новый паркинг
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -22,7 +22,7 @@ const CreateBrand = ({ show, onHide }) => {
           <Form.Control
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="Введите название бренда"
+            placeholder="Введите адрес паркинга"
           />
         </Form>
       </Modal.Body>
@@ -30,7 +30,7 @@ const CreateBrand = ({ show, onHide }) => {
         <Button variant="outline-danger" onClick={onHide}>
           Закрыть
         </Button>
-        <Button variant="outline-success" onClick={addBrand}>
+        <Button variant="outline-success" onClick={addPark}>
           Добавить
         </Button>
       </Modal.Footer>
@@ -38,4 +38,4 @@ const CreateBrand = ({ show, onHide }) => {
   )
 }
 
-export default CreateBrand
+export default CreatePark

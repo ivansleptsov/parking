@@ -1,62 +1,56 @@
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Col, Dropdown, Form, Modal, Row } from 'react-bootstrap'
-import {
-  createDevice,
-  fetchBrands,
-  fetchDevices,
-  fetchTypes,
-} from '../../http/deviceAPI'
+import { createPlace, fetchParks, fetchPlaces } from '../../http/placeAPI'
 import { Context } from '../../index'
 
-const CreateDevice = observer(({ show, onHide }) => {
-  const { device } = useContext(Context)
-  const [name, setName] = useState('')
+const CreatePlace = observer(({ show, onHide }) => {
+  const { place } = useContext(Context)
+  const [number, setNumber] = useState('')
   const [price, setPrice] = useState(0)
-  const [file, setFile] = useState('null')
-  const [info, setInfo] = useState([])
-  const [brandName, setBrandName] = useState('')
+  const [description, setDescription] = useState('')
+  // const [file, setFile] = useState('null')
+  // const [info, setInfo] = useState([])
+  // const [brandName, setBrandName] = useState('')
 
   useEffect(() => {
-    fetchTypes().then((data) => device.setTypes(data))
-    fetchBrands().then((data) => device.setBrands(data))
+    // fetchTypes().then((data) => device.setTypes(data))
+    fetchParks().then((data) => place.setParks(data))
   }, [])
 
-  const addInfo = () => {
-    setInfo([...info, { title: '', description: '', number: Date.now() }])
-  }
-  const removeInfo = (number) => {
-    setInfo(info.filter((i) => i.number !== number))
-  }
+  // const addInfo = () => {
+  //   setInfo([...info, { title: '', description: '', number: Date.now() }])
+  // }
+  // const removeInfo = (number) => {
+  //   setInfo(info.filter((i) => i.number !== number))
+  // }
 
-  const changeInfo = (key, value, number) => {
-    setInfo(info.map((i) => (i.number === number ? { ...i, [key]: value } : i)))
-  }
-  const selectFile = (e) => {
-    setFile(e.target.files[0])
-  }
+  // const changeInfo = (key, value, number) => {
+  //   setInfo(info.map((i) => (i.number === number ? { ...i, [key]: value } : i)))
+  // }
+  // const selectFile = (e) => {
+  //   setFile(e.target.files[0])
+  // }
 
-  const addDevice = () => {
+  const addPlace = () => {
     const formData = new FormData()
-    formData.append('name', name)
+    formData.append('number', number)
     formData.append('price', `${price}`)
-    formData.append('img', file)
-    formData.append('brandName', device.selectedBrand.name)
-    formData.append('brandId', device.selectedBrand.id)
-    formData.append('typeId', device.selectedType.id)
-    formData.append('info', JSON.stringify(info))
-    createDevice(formData).then((data) => onHide())
+    formData.append('parkId', place.selectedPark.id)
+
+    // formData.append('info', JSON.stringify(info))
+    createPlace(formData).then((data) => onHide())
   }
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Добавить новое устройство
+          Добавить новое парковочное место
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Dropdown className="mt-2 mb-2">
+          {/* <Dropdown className="mt-2 mb-2">
             <Dropdown.Toggle>
               {device.selectedType.name || 'Выберите тип'}
             </Dropdown.Toggle>
@@ -70,18 +64,18 @@ const CreateDevice = observer(({ show, onHide }) => {
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
           <Dropdown className="mt-2 mb-2">
             <Dropdown.Toggle>
-              {device.selectedBrand.name || 'Выберите бренд'}
+              {place.selectedPark.address || 'Выберите паркинг'}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {device.brands.map((brand) => (
+              {place.parks.map((park) => (
                 <Dropdown.Item
-                  onClick={() => device.setSelectedBrand(brand)}
-                  key={brand.id}
+                  onClick={() => place.setSelectedPark(park)}
+                  key={park.id}
                 >
-                  {brand.name}
+                  {park.address}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
@@ -89,20 +83,20 @@ const CreateDevice = observer(({ show, onHide }) => {
 
           <Form.Control
             className="mt-3"
-            placeholder="Введите название устройства"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            placeholder="Введите номер места"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
           />
           <Form.Control
             className="mt-3"
-            placeholder="Введите стоимость устройства"
+            placeholder="Введите стоимость аренды"
             type="number"
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
           />
-          <Form.Control className="mt-3" type="file" onChange={selectFile} />
+          {/* <Form.Control className="mt-3" type="file" onChange={selectFile} /> */}
           <hr />
-          <Button variant="outline-dark" onClick={addInfo}>
+          {/* <Button variant="outline-dark" onClick={addInfo}>
             Добавить новое свойство
           </Button>
           {info.map((i) => (
@@ -134,14 +128,14 @@ const CreateDevice = observer(({ show, onHide }) => {
                 </Button>
               </Col>
             </Row>
-          ))}
+          ))} */}
         </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-danger" onClick={onHide}>
           Закрыть
         </Button>
-        <Button variant="outline-success" onClick={addDevice}>
+        <Button variant="outline-success" onClick={addPlace}>
           Добавить
         </Button>
       </Modal.Footer>
@@ -149,4 +143,4 @@ const CreateDevice = observer(({ show, onHide }) => {
   )
 })
 
-export default CreateDevice
+export default CreatePlace

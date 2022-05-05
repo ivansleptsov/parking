@@ -3,7 +3,7 @@ import { Context } from '../index'
 import { Button, Container, Navbar } from 'react-bootstrap'
 import { Nav } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
-import { ADMIN_ROUTE, LOGIN_ROUTE, HOME_ROUTE } from '../utils/consts'
+import { ADD_ROUTE, LOGIN_ROUTE, HOME_ROUTE } from '../utils/consts'
 import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
 
@@ -18,7 +18,7 @@ const NavBar = observer(() => {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <NavLink style={{ color: 'white' }} to={SHOP_ROUTE}>
+        <NavLink style={{ color: 'white' }} to={HOME_ROUTE}>
           BookParking
         </NavLink>
 
@@ -26,7 +26,7 @@ const NavBar = observer(() => {
           <Nav className="ms-auto" style={{ color: 'white' }}>
             <Button
               variant={'outline-light'}
-              onClick={() => navigate(ADMIN_ROUTE)}
+              onClick={() => navigate(ADD_ROUTE)}
             >
               Сдать парковку
             </Button>

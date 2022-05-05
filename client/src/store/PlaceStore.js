@@ -2,32 +2,36 @@ import { makeAutoObservable } from 'mobx'
 
 export default class PlaceStore {
   constructor() {
-    this._parks = []
-    this._places = []
-    // this._selectedType = {}
-    // this._selectedBrand = {}
+    this._parks = [
+      { id: 10, address: '203 korpus 10' },
+      { id: 11, address: '203 korpus 11' },
+      { id: 12, address: '203 korpus 12' },
+      { id: 13, address: '203 korpus 13' },
+    ]
+    this._places = [
+      { id: 10, number: '10', rating: '5' },
+      { id: 11, number: '11', rating: '5' },
+      { id: 12, number: '12', rating: '5' },
+      { id: 13, number: '13', rating: '5' },
+    ]
+    this._selectedPark = {}
     this._page = 1
     this._totalCount = 0
     this._limit = 3
     makeAutoObservable(this)
   }
-  setTypes(places) {
+  setPlaces(places) {
     this._places = places
   }
 
-  setDevices(parks) {
+  setParks(parks) {
     this._parks = parks
   }
 
-  // setSelectedType(type) {
-  //   this.setPage(1)
-  //   this._selectedType = type
-  // }
-
-  // setSelectedBrand(brand) {
-  //   this.setPage(1)
-  //   this._selectedBrand = brand
-  // }
+  setSelectedPark(park) {
+    this.setPage(1)
+    this._selectedPark = park
+  }
 
   setPage(page) {
     this._page = page
@@ -44,12 +48,10 @@ export default class PlaceStore {
   get places() {
     return this._places
   }
-  // get selectedType() {
-  //   return this._selectedType
-  // }
-  // get selectedBrand() {
-  //   return this._selectedBrand
-  // }
+
+  get selectedPark() {
+    return this._selectedPark
+  }
 
   get page() {
     return this._page
