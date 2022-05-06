@@ -6,16 +6,17 @@ const ApiError = require('../error/ApiError')
 class PlaceController {
   async create(req, res, next) {
     try {
-      let { parkId, number, userId, description, price, activeStatus } =
-        req.body
+      // let { parkId, number, userId, description, price, activeStatus } =
+      //   req.body
+      let { number, description, price } = req.body
 
       const place = await Place.create({
-        parkId,
         number,
-        userId,
         description,
         price,
-        activeStatus,
+        // userId,
+        // parkId,
+        // activeStatus,
       })
 
       // if (info) {
