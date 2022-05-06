@@ -1,15 +1,4 @@
 import { $authHost, $host } from './index'
-// import jwt_decode from 'jwt-decode'
-
-// export const createType = async (type) => {
-//   const { data } = await $authHost.post('api/type', type)
-//   return data
-// }
-
-// export const fetchTypes = async () => {
-//   const { data } = await $host.get('api/type')
-//   return data
-// }
 
 export const createPark = async (park) => {
   const { data } = await $authHost.post('api/park', park)
@@ -17,7 +6,7 @@ export const createPark = async (park) => {
 }
 
 export const fetchParks = async () => {
-  const { data } = await $host.get('api/park')
+  const { data } = await $authHost.get('api/park')
   return data
 }
 
@@ -27,7 +16,7 @@ export const createPlace = async (place) => {
 }
 
 export const fetchPlaces = async (parkId, page, limit = 5) => {
-  const { data } = await $host.get('api/place', {
+  const { data } = await $authHost.get('api/place', {
     params: {
       parkId,
       page,
@@ -38,6 +27,6 @@ export const fetchPlaces = async (parkId, page, limit = 5) => {
 }
 
 export const fetchOnePlace = async (id) => {
-  const { data } = await $host.get('api/place/' + id)
+  const { data } = await $authHost.get('api/place/' + id)
   return data
 }

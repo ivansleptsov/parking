@@ -9,11 +9,8 @@ const CreatePlace = observer(({ show, onHide }) => {
   const [number, setNumber] = useState('')
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
-  // const [park, setPark] = useState('null')
-  const [userId, setUserId] = useState('')
-  const [activeStatus, setActiveStatus] = useState('null')
-  // const [file, setFile] = useState('null')
-  // const [info, setInfo] = useState([])
+  // const [userId, setUserId] = useState('')
+  // const [activeStatus, setActiveStatus] = useState('null')
 
   useEffect(() => {
     fetchParks().then((data) => place.setParks(data))
@@ -21,29 +18,19 @@ const CreatePlace = observer(({ show, onHide }) => {
     fetchPlaces().then((data) => place.setPlaces(data.rows))
   }, [])
 
-  // const addInfo = () => {
-  //   setInfo([...info, { title: '', description: '', number: Date.now() }])
-  // }
-  // const removeInfo = (number) => {
-  //   setInfo(info.filter((i) => i.number !== number))
-  // }
-
-  // const changeInfo = (key, value, number) => {
-  //   setInfo(info.map((i) => (i.number === number ? { ...i, [key]: value } : i)))
-  // }
-  // const selectFile = (e) => {
-  //   setFile(e.target.files[0])
-  // }
-
   const addPlace = () => {
-    const formData = new FormData()
-    formData.append('number', number)
-    formData.append('price', `${price}`)
-    formData.append('parkId', place.selectedPark.id)
-    formData.append('description', description)
-    formData.append('userId', userId)
-    // formData.append('info', JSON.stringify(info))
-    createPlace(formData).then((data) => onHide())
+    try {
+      const formData = new FormData()
+      formData.append('number', number)
+      formData.append('price', `${price}`)
+      formData.append('parkId', place.selectedPark.id)
+      formData.append('description', description)
+      // formData.append('userId', userId)
+
+      createPlace(formData).then((data) => onHide())
+    } catch (error) {
+      alert(error.response.data.message)
+    }
   }
 
   return (
@@ -55,21 +42,6 @@ const CreatePlace = observer(({ show, onHide }) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          {/* <Dropdown className="mt-2 mb-2">
-            <Dropdown.Toggle>
-              {device.selectedType.name || 'Выберите тип'}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {device.types.map((type) => (
-                <Dropdown.Item
-                  onClick={() => device.setSelectedType(type)}
-                  key={type.id}
-                >
-                  {type.name}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown> */}
           <Dropdown className="mt-2 mb-2">
             <Dropdown.Toggle>
               {place.selectedPark.address || 'Выберите паркинг'}
@@ -107,39 +79,6 @@ const CreatePlace = observer(({ show, onHide }) => {
           />
           {/* <Form.Control className="mt-3" type="file" onChange={selectFile} /> */}
           <hr />
-          {/* <Button variant="outline-dark" onClick={addInfo}>
-            Добавить новое свойство
-          </Button>
-          {info.map((i) => (
-            <Row className="mt-4" key={i.number}>
-              <Col md={4}>
-                <Form.Control
-                  value={i.title}
-                  onChange={(e) =>
-                    changeInfo('title', e.target.value, i.number)
-                  }
-                  placeholder="Введите название свойства"
-                />
-              </Col>
-              <Col md={4}>
-                <Form.Control
-                  value={i.description}
-                  onChange={(e) =>
-                    changeInfo('description', e.target.value, i.number)
-                  }
-                  placeholder="Введите описание свойства"
-                />
-              </Col>
-              <Col md={4}>
-                <Button
-                  variant="outline-danger"
-                  onClick={() => removeInfo(i.number)}
-                >
-                  Удалить
-                </Button>
-              </Col>
-            </Row>
-          ))} */}
         </Form>
       </Modal.Body>
       <Modal.Footer>
