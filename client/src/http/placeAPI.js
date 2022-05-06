@@ -21,8 +21,8 @@ export const fetchParks = async () => {
   return data
 }
 
-export const createPlace = async (id, place) => {
-  const { data } = await $authHost.post('api/place', id, place)
+export const createPlace = async (place) => {
+  const { data } = await $authHost.post('api/place', place)
   return data
 }
 

@@ -10,7 +10,7 @@ const CreatePlace = observer(({ show, onHide }) => {
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
   // const [park, setPark] = useState('null')
-  // const [userId, setUserId] = useState('null')
+  const [userId, setUserId] = useState('')
   const [activeStatus, setActiveStatus] = useState('null')
   // const [file, setFile] = useState('null')
   // const [info, setInfo] = useState([])
@@ -41,6 +41,7 @@ const CreatePlace = observer(({ show, onHide }) => {
     formData.append('price', `${price}`)
     formData.append('parkId', place.selectedPark.id)
     formData.append('description', description)
+    formData.append('userId', userId)
     // formData.append('info', JSON.stringify(info))
     createPlace(formData).then((data) => onHide())
   }
