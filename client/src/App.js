@@ -17,7 +17,7 @@ const App = observer(() => {
         user.setIsAuth(true)
       })
       .finally(() => setLoading(false))
-  })
+  }, [])
   return (
     <BrowserRouter>
       <NavBar />

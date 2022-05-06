@@ -8,7 +8,7 @@ export const registration = async (email, password) => {
     role: 'ADMIN',
   })
   localStorage.setItem('token', data.token)
-  return jwt_decode(data)
+  return jwt_decode(data.token)
 }
 
 export const login = async (email, password) => {

@@ -4,20 +4,13 @@ import star2 from '../assets/star2.png'
 import { useParams } from 'react-router-dom'
 import { fetchOnePlace } from '../http/placeAPI'
 const PlacePage = () => {
-  // const [place, setPlace] = useState({ info: [] })
-  // const { id } = useParams()
-  const place = {
-    id: 21,
-    number: '21',
-    address: '203 korpus 21',
-    rating: 5,
-    price: '100',
-  }
+  const [place, setPlace] = useState({ info: [] })
+  const { id } = useParams()
 
-  // useEffect(() => {
-  //   fetchOnePlace(id).then((data) => setPlace(data))
-  //   // eslint-disable-next-line
-  // }, [])
+  useEffect(() => {
+    fetchOnePlace(id).then((data) => setPlace(data))
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <Container className="mt-3">

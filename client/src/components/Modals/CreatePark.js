@@ -5,7 +5,7 @@ import { createPark } from '../../http/placeAPI'
 const CreatePark = ({ show, onHide }) => {
   const [value, setValue] = useState('')
   const addPark = () => {
-    createPark({ name: value }).then((data) => {
+    createPark({ address: value }).then((data) => {
       setValue('')
       onHide()
     })

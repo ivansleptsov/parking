@@ -9,13 +9,16 @@ const CreatePlace = observer(({ show, onHide }) => {
   const [number, setNumber] = useState('')
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
+  // const [park, setPark] = useState('null')
+  // const [userId, setUserId] = useState('null')
+  const [activeStatus, setActiveStatus] = useState('null')
   // const [file, setFile] = useState('null')
   // const [info, setInfo] = useState([])
-  // const [brandName, setBrandName] = useState('')
 
   useEffect(() => {
-    // fetchTypes().then((data) => device.setTypes(data))
     fetchParks().then((data) => place.setParks(data))
+
+    fetchPlaces().then((data) => place.setPlaces(data.rows))
   }, [])
 
   // const addInfo = () => {
@@ -37,10 +40,10 @@ const CreatePlace = observer(({ show, onHide }) => {
     formData.append('number', number)
     formData.append('price', `${price}`)
     formData.append('parkId', place.selectedPark.id)
-
     // formData.append('info', JSON.stringify(info))
     createPlace(formData).then((data) => onHide())
   }
+
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
@@ -93,6 +96,12 @@ const CreatePlace = observer(({ show, onHide }) => {
             type="number"
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
+          />
+          <Form.Control
+            className="mt-3"
+            placeholder="Введите описание"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
           {/* <Form.Control className="mt-3" type="file" onChange={selectFile} /> */}
           <hr />
