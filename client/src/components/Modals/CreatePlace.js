@@ -40,6 +40,7 @@ const CreatePlace = observer(({ show, onHide }) => {
     formData.append('number', number)
     formData.append('price', `${price}`)
     formData.append('parkId', place.selectedPark.id)
+    formData.append('description', description)
     // formData.append('info', JSON.stringify(info))
     createPlace(formData).then((data) => onHide())
   }
