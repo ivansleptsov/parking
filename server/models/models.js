@@ -16,17 +16,18 @@ const Place = sequelize.define('place', {
     type: DataTypes.INTEGER,
     unique: true,
     autoIncrement: true,
+    primaryKey: true,
   }, // ID парковочного места
-  parkId: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true }, // ID паркинга
-  number: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true }, // номер парковочного места
-  userId: { type: DataTypes.INTEGER, allowNull: false }, // ID владельца
+  // parkId: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true }, // ID паркинга
+  number: { type: DataTypes.INTEGER, allowNull: false }, // номер парковочного места
+  // userId: { type: DataTypes.INTEGER, allowNull: false }, // ID владельца
   description: { type: DataTypes.STRING, allowNull: true }, // описанием места
-  price: { type: DataTypes.INTEGER }, // цена за ночь
-  activeStatus: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
+  price: { type: DataTypes.INTEGER, allowNull: false }, // цена за ночь
+  // activeStatus: {
+  //   type: DataTypes.BOOLEAN,
+  //   allowNull: false,
+  //   defaultValue: false,
+  // },
 })
 
 const Park = sequelize.define('park', {
